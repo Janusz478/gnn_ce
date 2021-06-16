@@ -1,7 +1,3 @@
-import os
-os.chdir('../..')
-print(os.getcwd())
-
 import numpy as np
 import torch
 import pickle
@@ -10,11 +6,12 @@ import os
 import matplotlib.pyplot as plt
 
 import pickle
-from data.JOBSynthetic import JOBSyntheticDatasetDGL
-from data.JOBSynthetic import JOBSyntheticDataset
-from data.data import LoadData
+from JOBSynthetic import JOBSyntheticDatasetDGL
+from JOBSynthetic import JOBSyntheticDataset
+from data import LoadData
 from torch.utils.data import DataLoader
-
+#os.chdir('..')
+print(os.getcwd())
 
 #DATASET_NAME = "Logical"
 DATASET_NAME = "Logical-Samples"
@@ -56,7 +53,7 @@ num_atom_type = 0   #irrelevant
 num_bond_type = 0   #irrelevant
 
 start = time.time()
-with open('data/JOBSynthetic/' + DATASET_NAME + ".pkl", 'wb') as f:
+with open('JOBSynthetic/' + DATASET_NAME + ".pkl", 'wb') as f:
         pickle.dump([dataset.train,dataset.val,dataset.test,num_atom_type,num_bond_type],f)
 print('Time (sec):',time.time() - start)
 

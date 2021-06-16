@@ -6,6 +6,7 @@ import dgl
 import numpy as np
 import csv
 from scipy import sparse as sp
+import os
 
 
 class JOBSyntheticDGL(torch.utils.data.Dataset):
@@ -14,14 +15,14 @@ class JOBSyntheticDGL(torch.utils.data.Dataset):
             name = name.split("-")
             name.pop()
             name = "-".join(name)
-            self.path_job_graphs = "data/job-light-pickle/with-samples/" + str.lower(name) + "/"
-            self.path_synthetic_graphs = "data/synthetic-pickle/with-samples/" + str.lower(name) + "/"
+            self.path_job_graphs = "job-light-pickle/with-samples/" + str.lower(name) + "/"
+            self.path_synthetic_graphs = "synthetic-pickle/with-samples/" + str.lower(name) + "/"
         else:
-            self.path_job_graphs = "data/job-light-pickle/without-samples/" + str.lower(name) + "/"
-            self.path_synthetic_graphs = "data/synthetic-pickle/without-samples/" + str.lower(name) + "/"
+            self.path_job_graphs = "job-light-pickle/without-samples/" + str.lower(name) + "/"
+            self.path_synthetic_graphs = "synthetic-pickle/without-samples/" + str.lower(name) + "/"
         self.split = split
-        self.job_cardinalities_path = "data/job-light-pickle/team10_job_light_cardinalities.csv"
-        self.synthetic_cardinalities_path = "data/synthetic-pickle/team10_synthetic_cardinalities.csv"
+        self.job_cardinalities_path = "job-light-pickle/team10_job_light_cardinalities.csv"
+        self.synthetic_cardinalities_path = "synthetic-pickle/team10_synthetic_cardinalities.csv"
         self.graph_labels = []
         self.graph_lists = []
         self._prepare()
@@ -91,7 +92,7 @@ class JOBSyntheticDataset(torch.utils.data.Dataset):
         start = time.time()
         print("[I] Loading dataset %s..." % (name))
         self.name = name
-        path_to_datasets = "data/JOBSynthetic/"
+        path_to_datasets = "JOBSynthetic/"
         with open(path_to_datasets + name + '.pkl', "rb") as f:
             f = pickle.load(f)
             self.train = f[0]

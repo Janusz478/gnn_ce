@@ -1,0 +1,8 @@
+pip install numpy
+pip install matplotlib
+pip install torch
+pip install dgl-cu101
+pip install networkx
+pip install ogb
+pip install tensorboardX 
+pip install tqdm 
