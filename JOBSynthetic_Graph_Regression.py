@@ -783,7 +783,7 @@ if notebook_mode==True:
     
     # convert to .py format
     from utils.cleaner_main import *
-    cleaner_main('main_molecules_graph_regression')
+    #cleaner_main('main_molecules_graph_regression')
     
     main(True,config)
     
