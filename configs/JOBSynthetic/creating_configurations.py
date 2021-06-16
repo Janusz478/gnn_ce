@@ -24,7 +24,7 @@ for pe in pos_enc:
                 with open(file_name, "w") as out_file:
                     json.dump(config, out_file)
 
-with open("../../scripts/GatedGCN/script_configurations.sh", "w") as sh_file:
+with open("../../scripts/script_configurations.sh", "w") as sh_file:
     sh_file.write("#!/bin/bash\n")
     for conf_file in file_names:
         sh_file.write("python JOBSynthetic_Graph_Regression.py --config \'../../configs/JOBSynthetic/{}\'\n".format(conf_file))
