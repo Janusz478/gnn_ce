@@ -1,10 +1,10 @@
 """
     File to load dataset based on user control from main file
 """
-from data.JOBSynthetic import JOBSyntheticDataset
-from data.JOBSyntheticBig import JOBSyntheticBigDataset
-from data.JCCHTPCH import JCCHTPCHDataset
-from data.JOBScale import JOBScaleDataset
+from JOBSynthetic import JOBSyntheticDataset
+from JOBSyntheticBig import JOBSyntheticBigDataset
+from JCCHTPCH import JCCHTPCHDataset
+from JOBScale import JOBScaleDataset
 
 
 
