@@ -10,7 +10,7 @@ from JOBSynthetic import JOBSyntheticDatasetDGL
 from JOBSynthetic import JOBSyntheticDataset
 from data import LoadData
 from torch.utils.data import DataLoader
-#os.chdir('..')
+os.chdir('..')
 print(os.getcwd())
 
 #DATASET_NAME = "Logical"
