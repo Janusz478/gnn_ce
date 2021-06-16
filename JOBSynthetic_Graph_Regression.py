@@ -363,7 +363,7 @@ def savePredictions(model, device, data_loader, write):
     mae_unnormalized = mae_loss(torch.FloatTensor(predictions_unnormalized), torch.FloatTensor(label_unnormalized))
     if write:
         print("The mean absolute error of unnormalized test set is", mae_unnormalized)
-    return mae_unnormalized
+    return mae_unnormalized, predictions_unnormalized, label_unnormalized
 
 """
     TRAINING CODE
@@ -471,11 +471,11 @@ def train_val_pipeline(MODEL_NAME, dataset, params, net_params, dirs):
                 writer.add_scalar('test/_mae', epoch_test_mae, epoch)
                 writer.add_scalar('learning_rate', optimizer.param_groups[0]['lr'], epoch)
 
-                        
+                unnorm_mae, _, _ = savePredictions(model, device, test_loader, False)
                 t.set_postfix(time=time.time()-start, lr=optimizer.param_groups[0]['lr'],
                               train_loss=epoch_train_loss, val_loss=epoch_val_loss,
                               train_MAE=epoch_train_mae, val_MAE=epoch_val_mae,
-                              test_MAE=epoch_test_mae, unnorm_MAE=savePredictions(model, device, test_loader, False))
+                              test_MAE=epoch_test_mae, unnorm_MAE=unnorm_mae)
 
 
                 per_epoch_time.append(time.time()-start)
@@ -524,7 +524,22 @@ def train_val_pipeline(MODEL_NAME, dataset, params, net_params, dirs):
 
     writer.close()
 
-    mae_unnormalized = savePredictions(model, device, test_loader, True)
+    mae_unnormalized, preds_unnorm, labels_unnorm = savePredictions(model, device, test_loader, True)
+    qerror = []
+    for i in range(len(preds_unnorm)):
+        if preds_unnorm[i] > float(labels_unnorm[i]):
+            qerror.append(preds_unnorm[i] / float(labels_unnorm[i]))
+        else:
+            qerror.append(float(labels_unnorm[i]) / float(preds_unnorm[i]))
+
+    file_name = "out/{}_regression/results.csv".format(DATASET_NAME)
+    if not os.path.isfile(file_name):
+        with open(file_name, "w") as csv_file:
+            csv_file.write("train_mae,val_mae,test_mae,test_unnorm_mae,test_mean_q,test_median_q,test_90_q,test_95_q,test_99_q,test_max_q,write_file_name")
+    with open(file_name, "a") as result_file:
+        result_file.write("{},{},{},{},{},{},{},{},{},{},{}".format(
+            train_mae,test_mae,val_mae,mae_unnormalized,np.mean(qerror), np.median(qerror),np.percentile(qerror, 90),
+            p.percentile(qerror, 95), np.percentile(qerror, 99), np.max(qerror), write_file_name))
     """
         Write the results in out_dir/results folder
     """
