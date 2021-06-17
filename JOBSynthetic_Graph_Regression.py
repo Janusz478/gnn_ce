@@ -327,7 +327,7 @@ with open(csvpath) as csvfile:
         else:
             not_first_element = True
 
-def savePredictions(model, device, data_loader, write):
+def savePredictions(model, device, data_loader, write, DATASET_NAME):
     predictions_unnormalized = []
     model.eval()
     with torch.no_grad():
@@ -472,7 +472,7 @@ def train_val_pipeline(MODEL_NAME, dataset, params, net_params, dirs):
                 writer.add_scalar('test/_mae', epoch_test_mae, epoch)
                 writer.add_scalar('learning_rate', optimizer.param_groups[0]['lr'], epoch)
 
-                unnorm_mae, _, _ = savePredictions(model, device, test_loader, False)
+                unnorm_mae, _, _ = savePredictions(model, device, test_loader, False, DATASET_NAME)
                 t.set_postfix(time=time.time()-start, lr=optimizer.param_groups[0]['lr'],
                               train_loss=epoch_train_loss, val_loss=epoch_val_loss,
                               train_MAE=epoch_train_mae, val_MAE=epoch_val_mae,
@@ -495,8 +495,6 @@ def train_val_pipeline(MODEL_NAME, dataset, params, net_params, dirs):
                         os.remove(file)
 
                 scheduler.step(epoch_val_loss)
-                
-                #savePredictions(model, device, val_loader, epoch)
 
 
                 if optimizer.param_groups[0]['lr'] < params['min_lr']:
@@ -525,7 +523,7 @@ def train_val_pipeline(MODEL_NAME, dataset, params, net_params, dirs):
 
     writer.close()
 
-    mae_unnormalized, preds_unnorm, labels_unnorm = savePredictions(model, device, test_loader, True)
+    mae_unnormalized, preds_unnorm, labels_unnorm = savePredictions(model, device, test_loader, True, DATASET_NAME)
     qerror = []
     for i in range(len(preds_unnorm)):
         if preds_unnorm[i] > float(labels_unnorm[i]):
