@@ -620,7 +620,6 @@ def main(notebook_mode=False,config=None):
             DATASET_NAME = args.dataset
         else:
             DATASET_NAME = config['dataset']
-            print("in else with dataset_name == {}".format(DATASET_NAME))
         dataset = LoadData(DATASET_NAME)
         if args.out_dir is not None:
             out_dir = args.out_dir
