@@ -171,7 +171,7 @@ if notebook_mode == True:
     
 
     if MODEL_NAME == 'GatedGCN':
-        seed = 41; epochs = 1000; batch_size = 32; init_lr = 0.003; lr_reduce_factor = 0.5; lr_schedule_patience = 10; min_lr = 1e-5; weight_decay = 0
+        seed = 41; epochs = 1000; batch_size = 128; init_lr = 0.003; lr_reduce_factor = 0.5; lr_schedule_patience = 10; min_lr = 1e-5; weight_decay = 0
         L = 16; hidden_dim = 300; out_dim = hidden_dim; dropout = 0.0; readout = 'mean'
 
     if MODEL_NAME == 'GCN':
@@ -535,11 +535,11 @@ def train_val_pipeline(MODEL_NAME, dataset, params, net_params, dirs):
     file_name = "out/{}_regression/results.csv".format(DATASET_NAME)
     if not os.path.isfile(file_name):
         with open(file_name, "w") as csv_file:
-            csv_file.write("train_mae,val_mae,test_mae,test_unnorm_mae,test_mean_q,test_median_q,test_90_q,test_95_q,test_99_q,test_max_q,write_file_name")
+            csv_file.write("train_mae,val_mae,test_mae,test_unnorm_mae,test_mean_q,test_median_q,test_90_q,test_95_q,test_99_q,test_max_q,write_file_name\n")
     with open(file_name, "a") as result_file:
-        result_file.write("{},{},{},{},{},{},{},{},{},{},{}".format(
+        result_file.write("{},{},{},{},{},{},{},{},{},{},{}\n".format(
             train_mae,test_mae,val_mae,mae_unnormalized,np.mean(qerror), np.median(qerror),np.percentile(qerror, 90),
-            p.percentile(qerror, 95), np.percentile(qerror, 99), np.max(qerror), write_file_name))
+            np.percentile(qerror, 95), np.percentile(qerror, 99), np.max(qerror), write_file_name))
     """
         Write the results in out_dir/results folder
     """
