@@ -67,8 +67,9 @@ class DotDict(dict):
 # """
 
 
-    
-notebook_mode = True
+#Change notebook_mode variable to True, if the parameters of this file should be used
+notebook_mode = False
+#notebook_mode = True
 
 
 """
