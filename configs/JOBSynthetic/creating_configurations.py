@@ -22,7 +22,7 @@ for pe in pos_enc:
                 file_name = "config_pos_enc_{}_hidden_dim_{}_batch_size_{}_layers_{}.json".format(pe, hd, bs, l)
                 file_names.append(file_name)
                 with open(file_name, "w") as out_file:
-                    json.dump(config, out_file)
+                    json.dump(config, out_file, indent=2)
 
 with open("../../scripts/script_configurations.sh", "w") as sh_file:
     sh_file.write("#!/bin/bash\n")
