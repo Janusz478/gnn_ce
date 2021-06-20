@@ -390,7 +390,10 @@ def train_val_pipeline(MODEL_NAME, dataset, params, net_params, dirs):
             print('Time PE:',time.time()-t0)
         
     trainset, valset, testset = dataset.train, dataset.val, dataset.test
-        
+    print(trainset[0])
+    print(valset[0])
+    print(testset[0])
+    
     root_log_dir, root_ckpt_dir, write_file_name, write_config_file = dirs
     device = net_params['device']
     
