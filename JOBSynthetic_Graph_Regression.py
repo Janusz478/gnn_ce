@@ -136,6 +136,8 @@ if notebook_mode == True:
     trainset, valset, testset = dataset.train, dataset.val, dataset.test
     print("[I] Finished loading.")
     print(trainset[0])
+    print(valset[0])
+    print(testset[0])
 
 #MODEL_NAME = '3WLGNN'
 #MODEL_NAME = 'RingGNN'
@@ -537,7 +539,7 @@ def train_val_pipeline(MODEL_NAME, dataset, params, net_params, dirs):
             csv_file.write("train_mae,val_mae,test_mae,test_unnorm_mae,test_mean_q,test_median_q,test_90_q,test_95_q,test_99_q,test_max_q,write_file_name\n")
     with open(file_name, "a") as result_file:
         result_file.write("{},{},{},{},{},{},{},{},{},{},{}\n".format(
-            train_mae,test_mae,val_mae,mae_unnormalized,np.mean(qerror), np.median(qerror),np.percentile(qerror, 90),
+            train_mae,val_mae,test_mae,mae_unnormalized,np.mean(qerror), np.median(qerror),np.percentile(qerror, 90),
             np.percentile(qerror, 95), np.percentile(qerror, 99), np.max(qerror), write_file_name))
     """
         Write the results in out_dir/results folder
